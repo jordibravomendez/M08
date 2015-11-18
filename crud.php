@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){ //Si nos entra un get - miramos si el 
         file_put_contents("./logs.txt","POST | ".$_GET["id"]." | ".date("D M j G:i:s T Y")." \n",FILE_APPEND); //LOGS con fecha
     
         //Crear archivo
-        file_put_contents($_GET['id'].".txt",file_get_contents("php://input")); //File get contents coge el valor que nos entre por el -d del curl.
+        file_put_contents($_GET['id'].".txt",file_get_contents("php://input"),FILE_APPEND); //File get contents coge el valor que nos entre por el -d del curl.
         //File put crea el archivo. El primer parametro será el archivo creado por ejemplo 1.txt y en el siguiente cogemos lo que nos entra por el parametro -d del curl para meterlo como cuerpo de ese fichero.
 
     }else{
@@ -47,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){ //Si nos entra un get - miramos si el 
         unlink("./".$_GET['id'].".txt"); //Con el getid+.txt le indicamos que fichero tiene que borrar.
         
         file_put_contents("./logs.txt","DELETE | ".$_GET["id"]." | ".date("D M j G:i:s T Y")."\n",FILE_APPEND); //LOGS con fecha
+        
+        
     }else{ //Si no, se lo indicamos.
         echo 'No existe el fichero. No se puede borrar...';
     }
